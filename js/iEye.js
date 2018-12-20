@@ -28,7 +28,7 @@
     //    Custom config
     // -------------------- */
 
-    /*/ Currently set to ctrl+q to trigger an invert */      
+    /*/ Currently set to ctrl+q to trigger an invert */
     keycodes: [81],
 
     /* Sites to auto invert */
@@ -54,7 +54,8 @@
     ],
     /* Auto invert exceptions */
     exclude: {
-        "www.google.ca": ["/_/chrome/newtab"]
+        "www.google.ca": ["/_/chrome/newtab"],
+        "www.google.com": ["/maps"]
     },
     /* unique css ID */
     uniqueStyle: "i-eye-style",
@@ -108,9 +109,13 @@
       // Auto load sections
       for (var auto in this.autoChange) {
         if (this.autoChange[auto] === this.host) {
-          // If host matchs, check path
+          // If host matches, check path
           for (var excludeItem in this.exclude[this.host]) {
-            if (this.path == this.exclude[this.host][excludeItem]) {
+            // convert exclusion into a regular expression
+            var re = new RegExp(this.exclude[this.host][excludeItem])
+
+            // test whether there is a regex match
+            if (re.test(this.path)) {
               // Dont invert this page
               return false;
             }
