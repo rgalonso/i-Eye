@@ -115,7 +115,7 @@
               return;
             }
           }
-          this.invertColor();
+          this.invertColor(true);
         }
       }
     }
