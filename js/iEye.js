@@ -74,18 +74,21 @@
     path: window.location.pathname,
     head: document.getElementsByTagName('head')[0],
 
-    invertColor: function () {
+    invertColor: function (forceEnable = false) {
       var style = document.getElementById(this.uniqueStyle);
-      if(!style) {
+
+      if(style) {
+        // Undo invert clicking the bookmarklet again
+        style.remove();
+      }
+
+      if (!style || forceEnable) {
         style = document.createElement('style');
         //injecting the css to the head
         style.type = 'text/css';
         style.id = this.uniqueStyle;
         style.appendChild(document.createTextNode(this.css));
         this.head.appendChild(style);
-      } else {
-        // Undo invert clicking the bookmarklet again
-        style.remove();
       }
     },
 
@@ -99,7 +102,9 @@
         }
         return false;
       }.bind(this));
+    },
 
+    autoLoad: function() {
       // Auto load sections
       for (var auto in this.autoChange) {
         if (this.autoChange[auto] === this.host) {
@@ -107,13 +112,22 @@
           for (var excludeItem in this.exclude[this.host]) {
             if (this.path == this.exclude[this.host][excludeItem]) {
               // Dont invert this page
-              return;
+              return false;
             }
           }
-          this.invertColor();
+          this.invertColor(true);
+          return true;
         }
       }
     }
   };
+    // load as fast as possible, to apply style as document loads
   iEye.init(this);
+  if (iEye.autoLoad(this)) {
+      // if autoLoad indicates this page was in the autoChange list, then add an event
+      // listener to run the function once more when all content has loaded, to ensure
+      // that any elements that weren't yet available on the first attempt do end up
+      // getting the style applied to them
+      document.addEventListener("DOMContentLoaded", function(event) { iEye.invertColor(this, true) });
+  }
 }());
