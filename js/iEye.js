@@ -13,7 +13,7 @@
 
 (function () {
     // user configurable parameters
-  var invrsnPrcntg = 100;
+  var invrsnPrcntg = 80;
 
     // derive background color from above inversion percentage
   var rgbNumStr = Math.round(255*((100 - invrsnPrcntg)/100)).toString();
