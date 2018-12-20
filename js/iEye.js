@@ -74,18 +74,21 @@
     path: window.location.pathname,
     head: document.getElementsByTagName('head')[0],
 
-    invertColor: function () {
+    invertColor: function (forceEnable = false) {
       var style = document.getElementById(this.uniqueStyle);
-      if(!style) {
+
+      if(style) {
+        // Undo invert clicking the bookmarklet again
+        style.remove();
+      }
+
+      if (!style || forceEnable) {
         style = document.createElement('style');
         //injecting the css to the head
         style.type = 'text/css';
         style.id = this.uniqueStyle;
         style.appendChild(document.createTextNode(this.css));
         this.head.appendChild(style);
-      } else {
-        // Undo invert clicking the bookmarklet again
-        style.remove();
       }
     },
 
