@@ -99,7 +99,9 @@
         }
         return false;
       }.bind(this));
+    },
 
+    autoLoad: function() {
       // Auto load sections
       for (var auto in this.autoChange) {
         if (this.autoChange[auto] === this.host) {
@@ -115,5 +117,7 @@
       }
     }
   };
+    // load as fast as possible, to apply style as document loads
   iEye.init(this);
+  iEye.autoLoad(this);
 }());
