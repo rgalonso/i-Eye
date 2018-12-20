@@ -112,15 +112,22 @@
           for (var excludeItem in this.exclude[this.host]) {
             if (this.path == this.exclude[this.host][excludeItem]) {
               // Dont invert this page
-              return;
+              return false;
             }
           }
           this.invertColor(true);
+          return true;
         }
       }
     }
   };
     // load as fast as possible, to apply style as document loads
   iEye.init(this);
-  iEye.autoLoad(this);
+  if (iEye.autoLoad(this)) {
+      // if autoLoad indicates this page was in the autoChange list, then add an event
+      // listener to run the function once more when all content has loaded, to ensure
+      // that any elements that weren't yet available on the first attempt do end up
+      // getting the style applied to them
+      document.addEventListener("DOMContentLoaded", function(event) { iEye.invertColor(this, true) });
+  }
 }());
