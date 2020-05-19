@@ -62,7 +62,7 @@
     /*-------- END Config ----------*/
 
     css: " html {-webkit-filter: invert(" + invrsnPrcntgStr + ");}" +
-      " body{background-color: " + bgColorStr + ";} " +
+      " body{background-color: " + bgColorStr + "!important;} " +
             " img {-webkit-filter: invert(" + invrsnPrcntgStr + ");}" +
             " object {-webkit-filter: invert(" + invrsnPrcntgStr + ");}" +
             " video {-webkit-filter: invert(" + invrsnPrcntgStr + ");}" +
