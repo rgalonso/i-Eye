@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         iEye! (Chrome)
+// @name         iEye!
 // @namespace    http://themoviehacker.com/
-// @version      0.2
+// @version      0.3
 // @description  Invert any page color by pressing ctrl+q, auto invert any page by adding domain in the autoChange array.  Original at https://github.com/CynderR/i-Eye
 // @author       Jason de Belle, Robert Alonso
 // @homepageURL  https://github.com/rgalonso/i-Eye
@@ -18,6 +18,8 @@
     // derive background color from above inversion percentage
   var rgbNumStr = Math.round(255*((100 - invrsnPrcntg)/100)).toString();
   var bgColorStr = "rgb(" + rgbNumStr + ", " + rgbNumStr + ", " + rgbNumStr + ")";
+
+  var htmlBgColorStr = "background-color: " + bgColorStr + ";";
 
     // format above into string for injection below
   var invrsnPrcntgStr = invrsnPrcntg.toString() + "%";
@@ -61,8 +63,7 @@
     uniqueStyle: "i-eye-style",
     /*-------- END Config ----------*/
 
-    css: " html {-webkit-filter: invert(" + invrsnPrcntgStr + ");}" +
-      " body{background-color: " + bgColorStr + "!important;} " +
+    css: " html {" + htmlBgColorStr + " -webkit-filter: invert(" + invrsnPrcntgStr + ");}" +
             " img {-webkit-filter: invert(" + invrsnPrcntgStr + ");}" +
             " object {-webkit-filter: invert(" + invrsnPrcntgStr + ");}" +
             " video {-webkit-filter: invert(" + invrsnPrcntgStr + ");}" +
